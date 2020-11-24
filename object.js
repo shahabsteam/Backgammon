@@ -73,7 +73,12 @@ class Checker  {
       this.width =40;
       this.height = 40;
       //this.barIndex = barIndex;
-      this.color = color;
+      if(color==1){
+        this.color=255;
+      }else{
+        this.color=70
+      }
+      
     }
     move(dir, speed, targetX, diskX) {
       switch (dir) {
@@ -97,6 +102,12 @@ class Checker  {
       fill(this.color)
       
       ellipse(this.x,this.y,this.width,this.height)
+    }
+    returncolor(){
+      if(this.color==255)
+        return 1;
+        if(this.color==70)
+        return 0;
     }
 }
 
@@ -123,16 +134,16 @@ class Checker  {
       
     
         this.disks.push(new Checker(0,color,this.x+25,this.freeheight-50 ))
-      this.freeheight+=40;
+      this.freeheight+=30;
       
       
     }
     pop_stack(){
       
-        this.freeheight-=40
+        this.freeheight-=30
      
       
-      return this.disks.pop().color;
+      return this.disks.pop().returncolor();
     }
     changecolor(){
       {
@@ -166,22 +177,22 @@ class Checker  {
     add(color){
       if(this.i==0){
         this.disks.push(new Checker(0,color,this.x2,this.freeheight))
-      this.freeheight+=40;
+      this.freeheight+=30;
       }
       if(this.i==1){
         this.disks.push(new Checker(0,color,this.x2,this.freeheight-50 ))
-      this.freeheight-=40;
+      this.freeheight-=30;
       }
       
     }
     pop_stack(){
       if(this.i==0){
-        this.freeheight-=40
+        this.freeheight-=30
       }
       if(this.i==1){
-        this.freeheight+=40
+        this.freeheight+=30
       }
-      return this.disks.pop().color;
+      return this.disks.pop().returncolor();
     }  
     render() {
       push();

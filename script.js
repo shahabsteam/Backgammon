@@ -4,7 +4,7 @@ let first_x;
 let first_y;
 let bar =new Bar(565,0,50,1200);
 for(var i=0;i<2;i++){
-    for(var j=0;j<12;j++){
+    for(var j=0;j<=12;j++){
         if(j==6){
             sections.push(bar)
             continue;
@@ -13,30 +13,43 @@ for(var i=0;i<2;i++){
         sections.push(new Section(5+90*j, 5+i*805, 45+90*j, 300+200*i, 85+90*j,5+i*805 ,i))    
     }
 }
-/*for(var j=0;j<=12;j++){
-    if(j==6)
-        continue;
-    sections.push(new Section(5+90*j, 5, 45+90*j, 300, 85+90*j,5 ,0))
-}
-    for(var j=0;j<=12;j++){
-        if(j==6)
-            continue;
-        sections.push(new Section(5+90*j, 800, 45+90*j, 500, 85+90*j,800,1));
-    }*/
-    
-//sections[0].disks.push(new Checker(0,255,30,30))
+
 //sections[0].disks.push(new Checker(12,0,30,70))
-sections[0].add(255)
-sections[0].add(255)
-sections[13].add(255)
-sections[13].add(0)
+//sections[0].add(255)
+//sections[0].add(255)
+//sections[0].add(255)
+//sections[13].add(255)
+//sections[13].add(0)
 let players = ['1', '2']
 let currentplayer=random(players);
 function setup(){
     let mycanvas =createCanvas(1200, 800)
     mycanvas.parent('#sec')
+    prepare()
     
 
+}
+function adddisk(color,count,id){
+    for(let i=0;i<count;i++){
+        sections[id].add(color)
+    }
+}
+function prepare(){
+    adddisk(1,5,0);
+    adddisk(0,2,4);
+    adddisk(1,1,5);
+    adddisk(0,5,7);
+    adddisk(1,1,8);
+    adddisk(0,1,10);
+    adddisk(1,1,11);
+    adddisk(0,3,13);
+    adddisk(1,1,17)
+    adddisk(1,1,18);
+    adddisk(0,2,20);
+    adddisk(0,1,21);
+    adddisk(1,1,22);
+    adddisk(0,1,23);
+    adddisk(1,4,24)
 }
 function move(source , target){
     if(source>24 && target>24){
@@ -44,10 +57,10 @@ function move(source , target){
     }
     if (sections[source].disks.length == 0) return "Can't move!!!!";
       let color =sections[source].pop_stack();
+      console.log(`color : ${color}`)
     sections[target].add(color)
 
 }
-
 function mousePressed() {
     let x1 =Math.floor( map(mouseX, 0, width-100, 0, 12));
     let y1= Math.floor(map(mouseY,0,height,0,2));
@@ -57,20 +70,14 @@ function mousePressed() {
             first_x=x1;
             first_y=y1;
             istarget=true;
-            sections[first_x+first_y*12].changecolor();
+            sections[first_x+first_y*13].changecolor();
         }else{
-            console.log(first_x+first_y*12,x1+y1*12)
-            move(first_x+first_y*12,x1+y1*12)
-            sections[first_x+first_y*12].changecolor();
+            console.log(first_x+first_y*13,x1+y1*13)
+            move(first_x+first_y*13,x1+y1*13)
+            sections[first_x+first_y*13].changecolor();
             istarget=false;
         }
     }
-
-  
-    
-
-
-
   }
 
 function draw (){
