@@ -3,7 +3,6 @@ let istarget=false;
 let first_x;
 let first_y;
 let bar =new Bar(565,0,50,1200);
-
 for(var i=0;i<2;i++){
     for(var j=0;j<12;j++){
         if(j==6){
@@ -53,17 +52,20 @@ function mousePressed() {
     let x1 =Math.floor( map(mouseX, 0, width-100, 0, 12));
     let y1= Math.floor(map(mouseY,0,height,0,2));
     console.log(`x1: ${x1} , y1: ${y1}`)
-    if (!istarget){
-        first_x=x1;
-        first_y=y1;
-        istarget=true;
-        sections[first_x+first_y*12].changecolor();
-    }else{
-        console.log(first_x+first_y*12,x1+y1*12)
-        move(first_x+first_y*12,x1+y1*12)
-        sections[first_x+first_y*12].changecolor();
-        istarget=false;
+    if(x1+y1*12<=24 && y1>=0 && x1>=0){
+        if (!istarget){
+            first_x=x1;
+            first_y=y1;
+            istarget=true;
+            sections[first_x+first_y*12].changecolor();
+        }else{
+            console.log(first_x+first_y*12,x1+y1*12)
+            move(first_x+first_y*12,x1+y1*12)
+            sections[first_x+first_y*12].changecolor();
+            istarget=false;
+        }
     }
+
   
     
 
