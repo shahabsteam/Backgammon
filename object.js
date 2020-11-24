@@ -1,7 +1,6 @@
 class Stack{
     
     constructor(next){
-       
         this.elements=[];
         this.next=next;
     }
@@ -49,17 +48,33 @@ class Dice{
         return numbers;
     }
 }
+class CheckerAnimation {
+  constructor(disk, action, condition, end, target) {
+    this.disk = disk;
+    this.action = action;
+    this.condition = condition;
+    this.end = end;
+    this.target = target
+  }
+
+  run() {
+    if (this.condition(this.disk)) {
+      this.action(this.disk);
+    } else {
+      this.end(this.disk, this.target);
+    }
+  }
+}
 
 class Checker  {
-    constructor( barIndex,color) {
-      this.x = 0;
-      this.y = 0;
-      this.width =20;
-      this.height = 20;
-      this.barIndex = barIndex;
+    constructor( barIndex,color,x,y) {
+      this.x = x;
+      this.y = y;
+      this.width =40;
+      this.height = 40;
+      //this.barIndex = barIndex;
       this.color = color;
     }
-  
     move(dir, speed, targetX, diskX) {
       switch (dir) {
         case 'right':
@@ -78,68 +93,112 @@ class Checker  {
           break;
       }
     }
+    render(){
+      fill(this.color)
+      
+      ellipse(this.x,this.y,this.width,this.height)
+    }
 }
-class AnimationHandler {
-    constructor() {
-      this.state = 'free';
-      this.animations = [];
-    }
-    push(animation) {
-      this.state = 'busy';
-      this.animations.push(animation);
-    }
 
-    pop() {
-      return this.animations.pop();
+
+  class Bar{
+    constructor(x,y,width,height){
+      this.disks=[]
+      this.x=x;
+      this.y=y;
+      this.width=width;
+      this.height=height;
+      this.freeheight=400;
+      this.color='rgba(37,0,200,0.35)'
+      this.secondcolor='rgba(77,151,80,0.79)'
+      this.maincolor='rgba(37,0,200,0.35)'
     }
-  
-    run() {
-      if (this.animations.length === 0) {
-        if (this.state == 'busy') {
-          this.state = 'done';
-        } else {
-          this.state = 'free';
+    render(){
+      push()
+      fill(this.color)
+      rect(this.x, this.y, this.width, this.height)
+      pop()
+    }
+    add(color){
+      
+    
+        this.disks.push(new Checker(0,color,this.x+25,this.freeheight-50 ))
+      this.freeheight+=40;
+      
+      
+    }
+    pop_stack(){
+      
+        this.freeheight-=40
+     
+      
+      return this.disks.pop().color;
+    }
+    changecolor(){
+      {
+        if(this.color==this.maincolor){
+          this.color=this.secondcolor;
+        }else{
+          
+          this.color=this.maincolor;
         }
-      } else {
-        this.state = 'busy';
-        this.animations.slice(-1)[0].run();
-      }
-  
     }
-  }
+    }  
+    
+  }  
   class Section {
-    constructor(x1, y1, x2, y2, x3,y3,i) {
+    constructor(x1, y1, x2, y2, x3,y3,isdown) {
+      this.disks = [];
       this.x1 = x1;
       this.x2 = x2;
       this.x3=x3;
       this.y1=y1;
       this.y2=y2;
       this.y3=y3;
-     
-      this.i = i;
+     this.freeheight=y1+20;
+      this.i = isdown;
+      this.color='rgba(0,98,204,0.56)';
+      this.maincolor='rgba(0,98,204,0.56)';
+      this.secondcolor='rgba(77,151,80,0.79)';
+
+    }
+  
+    add(color){
+      if(this.i==0){
+        this.disks.push(new Checker(0,color,this.x2,this.freeheight))
+      this.freeheight+=40;
+      }
+      if(this.i==1){
+        this.disks.push(new Checker(0,color,this.x2,this.freeheight-50 ))
+      this.freeheight-=40;
+      }
+      
+    }
+    pop_stack(){
+      if(this.i==0){
+        this.freeheight-=40
+      }
+      if(this.i==1){
+        this.freeheight+=40
+      }
+      return this.disks.pop().color;
     }  
     render() {
       push();
-      fill(46,168,90);
+     // fill(46,168,90); green;
+     fill(this.color);
       triangle(this.x1, this.y1,this.x2,this.y2,this.x3,this.y3);
       pop();
     }
+    changecolor(){
+        if(this.color==this.maincolor){
+          this.color=this.secondcolor;
+        }else{
+          
+          this.color=this.maincolor;
+        }
+    }
+    
+    
     
 }
-class SectionAnimation {
-    constructor(disk, action, condition, end, target) {
-      this.disk = disk;
-      this.action = action;
-      this.condition = condition;
-      this.end = end;
-      this.target = target
-    }
-  
-    run() {
-      if (this.condition(this.disk)) {
-        this.action(this.disk);
-      } else {
-        this.end(this.disk, this.target);
-      }
-    }
-  }
