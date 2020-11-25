@@ -47,7 +47,6 @@ class Dice{
 
         }
         for(var i=0;i<this.numbers.length;i++){
-          console.log(`lol`)
          let img=loadImage(`images/dice_${this.numbers[i]}.png`)
           this.images.push(img);
        }
@@ -62,23 +61,6 @@ class Dice{
       });
 
     }
-}
-class CheckerAnimation {
-  constructor(disk, action, condition, end, target) {
-    this.disk = disk;
-    this.action = action;
-    this.condition = condition;
-    this.end = end;
-    this.target = target
-  }
-
-  run() {
-    if (this.condition(this.disk)) {
-      this.action(this.disk);
-    } else {
-      this.end(this.disk, this.target);
-    }
-  }
 }
 
 class Checker  {

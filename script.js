@@ -60,6 +60,23 @@ function prepare(){
     adddisk(0,1,23);
     adddisk(1,4,24)
 }
+function engine(source,target){
+    if(sections[source].player != currentplayer ){
+        alert('it is not your turn');
+        return;
+    }else if(source==target){
+        alert("you can't waste your turn")
+            return;
+    }else
+        {
+            move(source,target)
+            if(currentplayer=1){
+                currentplayer=2; turnDom.textContent=currentplayer
+            }else {currentplayer=1; turnDom.textContent=currentplayer;}
+        }
+    
+
+}
 function move(source , target){
     if(source>24 && target>24){
         return "cant move";
@@ -83,7 +100,8 @@ function mousePressed() {
             sections[first_x+first_y*13].changecolor();
         }else{
             console.log(first_x+first_y*13,x1+y1*13)
-            move(first_x+first_y*13,x1+y1*13)
+           // move(first_x+first_y*13,x1+y1*13)
+           engine(first_x+first_y*13,x1+y1*13)
             sections[first_x+first_y*13].changecolor();
             istarget=false;
         }
