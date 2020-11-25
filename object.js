@@ -48,7 +48,7 @@ class Dice{
         }
         for(var i=0;i<this.numbers.length;i++){
           console.log(`lol`)
-          img=loadImage(`images/dice_${this.numbers[i]}.png`)
+         let img=loadImage(`images/dice_${this.numbers[i]}.png`)
           this.images.push(img);
        }
     }
@@ -95,24 +95,6 @@ class Checker  {
       }
       
     }
-    move(dir, speed, targetX, diskX) {
-      switch (dir) {
-        case 'right':
-          this.x += min(speed, Math.abs(targetX - diskX));
-          break;
-        case 'left':
-          this.x -= min(speed, Math.abs(targetX - diskX));
-          break;
-        case 'up':
-          this.y -= speed;
-          break;
-        case 'down':
-          this.y += speed;
-          break;
-        default:
-          break;
-      }
-    }
     render(){
       fill(this.color)
       
@@ -129,7 +111,8 @@ class Checker  {
 
   class Bar{
     constructor(x,y,width,height){
-      this.disks=[]
+      this.player;
+      this.disks=[];
       this.x=x;
       this.y=y;
       this.width=width;
@@ -147,7 +130,10 @@ class Checker  {
     }
     add(color){
       
-    
+        if(color==0)
+          this.player=0;
+          else
+          this.player=1;
         this.disks.push(new Checker(0,color,this.x+25,this.freeheight-50 ))
       this.freeheight+=30;
       
@@ -186,10 +172,14 @@ class Checker  {
       this.color='rgba(0,98,204,0.56)';
       this.maincolor='rgba(0,98,204,0.56)';
       this.secondcolor='rgba(77,151,80,0.79)';
+      this.player;
 
     }
   
     add(color){
+      if(color==1)
+        this.player=1;
+        else this.player=2;
       if(this.i==0){
         this.disks.push(new Checker(0,color,this.x2,this.freeheight))
       this.freeheight+=30;

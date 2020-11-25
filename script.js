@@ -1,10 +1,12 @@
 let sections =[]
-let img;
-let dice = new Dice();
 
+let dice = new Dice();
+let players = ['1', '2']//player 1 is white player 2 is black
+let currentplayer;
 let istarget=false;
 let first_x;
 let first_y;
+let turnDom=document.getElementById('whoseturn')
 let bar =new Bar(565,0,50,1200);
 for(var i=0;i<2;i++){
     for(var j=0;j<=12;j++){
@@ -23,13 +25,14 @@ for(var i=0;i<2;i++){
 //sections[0].add(255)
 //sections[13].add(255)
 //sections[13].add(0)
-let players = ['1', '2']
-let currentplayer=random(players);
+
 function setup(){
+    currentplayer=random(players);
     dice.roll();
     img = loadImage('images/dice_1.png'); 
     let mycanvas =createCanvas(1200, 800)
     mycanvas.parent('#sec')
+    turnDom.textContent=currentplayer;
     prepare()
     
     
@@ -67,6 +70,7 @@ function move(source , target){
     sections[target].add(color)
 
 }
+
 function mousePressed() {
     let x1 =Math.floor( map(mouseX, 0, width-100, 0, 12));
     let y1= Math.floor(map(mouseY,0,height,0,2));
