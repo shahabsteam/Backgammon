@@ -1,4 +1,7 @@
 let sections =[]
+let img;
+let dice = new Dice();
+
 let istarget=false;
 let first_x;
 let first_y;
@@ -23,9 +26,12 @@ for(var i=0;i<2;i++){
 let players = ['1', '2']
 let currentplayer=random(players);
 function setup(){
+    dice.roll();
+    img = loadImage('images/dice_1.png'); 
     let mycanvas =createCanvas(1200, 800)
     mycanvas.parent('#sec')
     prepare()
+    
     
 
 }
@@ -84,8 +90,9 @@ function draw (){
         background(235);
        push()
        fill(210)
-        
         pop()
+       // image(img, 20, 350, 100, 100)
+       dice.render();
         sections.forEach((section) => section.render());
         sections.forEach((section)=>{
             section.disks.forEach((checker)=>{

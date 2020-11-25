@@ -20,8 +20,9 @@ class Stack{
 
 class Dice{
     constructor(){
-        this.text= document.getElementById("dice");
+        //this.text= document.getElementById("dice");
         this.numbers=[];
+        this.images=[];
 
         
     }
@@ -32,20 +33,34 @@ class Dice{
        }
     }
     roll(){
-        removeElements();
-       this. numbers=[];
-        let dice_1= math.floor(random(1, 7)) ;
-        numbers.push(dice_1);
-        let dice_2 = Math.floor(random(1,7)) ;
-        numbers.push(dice_2);
-        this.text.text
+      this.numbers=[];
+      this.images=[];
+        let dice_1= Math.floor( Math.random() * 6 ) +1 ;
+        this.numbers.push(dice_1);
+        let dice_2 = Math.floor( Math.random() * 6 ) +1 ;
+        this.numbers.push(dice_2);
+        //this.text.text
         if (dice_1==dice_2){
-            number.push(dice_1);
-            numbers.push(dice_2);
-            this.show();
+            this.numbers.push(dice_1);
+            this.numbers.push(dice_2);
+            //this.show();
 
         }
-        return numbers;
+        for(var i=0;i<this.numbers.length;i++){
+          console.log(`lol`)
+          img=loadImage(`images/dice_${this.numbers[i]}.png`)
+          this.images.push(img);
+       }
+    }
+    render(){
+      
+      let j=0;
+      this.images.forEach(picture => {
+        image(picture, 20+j*80, 350, 70, 70)
+        j++;
+        
+      });
+
     }
 }
 class CheckerAnimation {
