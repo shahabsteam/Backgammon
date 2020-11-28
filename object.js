@@ -26,12 +26,7 @@ class Dice{
 
         
     }
-    show(){
-       this.text.innerText=" number of dices:"
-       for (let i=0;i<this.numbers.length;i++){
-            this.text.innerText+=` ${this.numbers[i]} ,`
-       }
-    }
+    
     roll(){
       this.numbers=[];
       this.images=[];
@@ -60,6 +55,11 @@ class Dice{
         
       });
 
+    }
+    
+    delete(number){
+      this.numbers.splice(number,1);
+      this.images.splice(number,1);
     }
 }
 
@@ -112,21 +112,25 @@ class Checker  {
     }
     add(color){
       
-        if(color==0)
-          this.player=0;
-          else
+        if(color==1)
           this.player=1;
+          else
+          this.player=2;
         this.disks.push(new Checker(0,color,this.x+25,this.freeheight-50 ))
       this.freeheight+=30;
       
       
     }
     pop_stack(){
-      
+        
         this.freeheight-=30
      
       
-      return this.disks.pop().returncolor();
+      let returncolor= this.disks.pop().returncolor();
+      if(this.disks.length==0){
+        this.player=null;
+      }
+      return returncolor;
     }
     changecolor(){
       {
