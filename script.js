@@ -52,20 +52,62 @@ function prepare(){
     adddisk(1,5,20);
     adddisk(0,2,25);
 }
+
 function checkdice(source,target){
+    
     if(currentplayer==1){
-        if(source<13 && target<13){
+        if(source<13 && target<13){//if source and target are in the upside of board
             let diffrence = source-target;
             if(diffrence<0) return  false;
-            
-            
-                    
+            if((source >6 && target <6) ||(target<6 && source>6) ){//source and target are in the upside and diffrent parts
+                diffrence=diffrence-1;
+                for(var i=0 ; i<dice.numbers.length;i++){
+                    if(diffrence==dice.numbers[i]){
+                        dice.delete(i);
+                        return true;
+                    }      
                 }
-                // if
-                else{
+            }else{//source and target are in the upside and same parts
+                for(var i=0 ; i<dice.numbers.length;i++){
+                    if(diffrence==dice.numbers[i]){
+                        dice.delete(i);
+                        return true;
+                    }
+                }
+            }       
+                }
+                // if both source and target are in the downside of board
+                else if(source>12 && target >12) {
+                    let diffrence = target-source;
+                    if(diffrence<0) return false;
+                    if(target>19 &&  source <19){// source and target are in the downside and diffrent parts
+                        diffrence=diffrence-1;
+                        for(var i=0 ; i<dice.numbers.length;i++){
+                            if(diffrence==dice.numbers[i]){
+                                dice.delete(i);
+                                return true;
+                            }      
+                        }
+                    }else{//source and target are in the downside and same parts
+                        diffrence=diffrence;
+                        for(var i=0 ; i<dice.numbers.length;i++){
+                            if(diffrence==dice.numbers[i]){
+                                dice.delete(i);
+                                return true;
+                            }      
+                    } 
+                }
+                }if(source<13 && target >12){// source is upside target is downside
+                    let diffrence = target-(12-source);
+                    for(var i=0 ; i<dice.numbers.length;i++){
+                        if(diffrence==dice.numbers[i]){
+                            dice.delete(i);
+                            return true;
+                        }      
+                } 
 
                 }
-            }
+                }
             // if currentplayer was 2 ;
             else{
                 if(source<13 && target<13){
@@ -79,7 +121,7 @@ function checkdice(source,target){
         
        
 
-            return true;
+            return false;
     }
    
 function engine(source,target){
