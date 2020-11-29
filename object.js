@@ -93,8 +93,11 @@ class Checker  {
 
   class Bar{
     constructor(x,y,width,height){
-      this.player;
+      this.player={player1:false,player2:false};
+     // this.player;
       this.disks=[];
+      this.player1_disks=[];
+      this.player2_disks=[];
       this.x=x;
       this.y=y;
       this.width=width;
@@ -112,35 +115,60 @@ class Checker  {
     }
     add(color){
       
-        if(color==1)
-          this.player=1;
-          else
-          this.player=2;
-        this.disks.push(new Checker(0,color,this.x+25,this.freeheight-50 ))
-      this.freeheight+=30;
+        if(color==1){
+          this.player.player1=true;
+          this.player1_disks.push(new Checker(0,color,this.x+25,this.freeheight-50 ))
+          //this.disks=this.player1_disks+this.player2_disks;
+        }else{
+          this.player.player2=true;
+          this.player2_disks.push(new Checker(0,color,this.x+25,this.freeheight-50 ))
+         // this.disks.push(this.player2_disks);
+          
+        }
+        this.freeheight+=30
+      /*  this.player=1;
+        else
+        this.player=2;
+      this.disks.push(new Checker(0,color,this.x+25,this.freeheight-50 ))
+    this.freeheight+=30;*/
       
       
     }
-    pop_stack(){
-        
+  /*  pop_stack(){
         this.freeheight-=30
-     
-      
       let returncolor= this.disks.pop().returncolor();
       if(this.disks.length==0){
         this.player=null;
       }
       return returncolor;
-    }
+    }*/
+    pop_stack(number){
+      this.freeheight-=30
+      if(number==1){
+
+        let returncolor= this.player1_disks.pop().returncolor();
+        if(this.player1_disks.length==0){
+          this.player.player1=false;
+        }
+        return returncolor;
+      }else{
+        let returncolor= this.player2_disks.pop().returncolor();
+        console.log(`player2length :  ${this.player2_disks.length}`)
+        if(this.player2_disks.length==0){
+          this.player.player2=false;
+        }
+       return returncolor;
+      }
+    
+  }
     changecolor(){
-      {
         if(this.color==this.maincolor){
           this.color=this.secondcolor;
         }else{
           
           this.color=this.maincolor;
         }
-    }
+    
     }  
     
   }  
