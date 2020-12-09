@@ -28,6 +28,7 @@ function checkexit(){
                 if(sections[i].player==1){
                     numbers+=sections[i].disks.length;
                 }
+            }
                 if (numbers==15){
                     playerexit.first=true;
                     return true;
@@ -35,7 +36,7 @@ function checkexit(){
                     console.log(numbers);
                     return false;
                 }
-             }
+             
         }else{
             return true;
         }
@@ -45,13 +46,15 @@ function checkexit(){
                 if(sections[i].player==2){
                     numbers+=sections[i].disks.length;
                 }
+            }
                 if (numbers==15){
                     playerexit.second=true;
+                    return true;
                 }else{
                     console.log(numbers);
                     return false;
                 }
-             }
+             
         }else{
             return true;
         }
@@ -64,12 +67,19 @@ function exit(){
     if(currentplayer==1){
         if(checkexit()){
             for(var i=0;i<dice.numbers.length;i++){
-                if(source_section+dice.numbers[i]==27){
+                if(source_section+dice.numbers[i]==26){
                     sections[source_section].pop_stack();
                     dice.delete(i);
+                    player_1_out_disks++;
                     
                     break;
-                }
+                }  
+            }
+            if(dice.numbers.length==0){
+                if(currentplayer==1){
+                    currentplayer=2; turnDom.textContent=currentplayer;
+                }else {currentplayer=1; turnDom.textContent=currentplayer;}
+                dice.roll();
             }
         }else{
             alert('player 1 \n you should first move all your disks to your part')
@@ -80,10 +90,17 @@ function exit(){
                 if(source_section+dice.numbers[i]==13){
                     sections[source_section].pop_stack();
                     dice.delete(i);
+                    player_2_out_disks++;
                     break;
                 }
+
             }
-            
+            if(dice.numbers.length==0){
+                if(currentplayer==1){
+                    currentplayer=2; turnDom.textContent=currentplayer;
+                }else {currentplayer=1; turnDom.textContent=currentplayer;}
+                dice.roll();
+                }
 
         }else{
             alert('player 2 \n you should first move all your disks to your part')
@@ -113,7 +130,7 @@ function adddisk(color,count,id){
     }
 }
 function prepare(){
-    adddisk(1,5,0);
+   adddisk(1,5,0);
     adddisk(0,3,4);
     adddisk(0,5,7);
     adddisk(1,2,12);
@@ -121,6 +138,8 @@ function prepare(){
     adddisk(1,3,17);
     adddisk(1,5,20);
     adddisk(0,2,25);
+   /* adddisk(1,4,0);adddisk(1,1,5);adddisk(0,8,7);adddisk(0,3,8);adddisk(0,2,9)
+    adddisk(0,2,10);adddisk(1,1,15);adddisk(1,6,20);adddisk(1,1,21); adddisk(1,1,23) ;adddisk(1,1,25) */
 }
 
 function checkdice(source,target){
@@ -406,27 +425,35 @@ function mousePressed() {
   }
 
 function draw (){
-    
-        background(235);
-       push()
-       fill(210)
-        pop()
-       // image(img, 20, 350, 100, 100)
-       dice.render();
-       frameRate(15)
-        sections.forEach((section) => section.render());
-        for(let i=0;i<sections.length;i++){
-            for(let j=0;j<sections[i].disks.length;j++){
-                if(i!=6 && i!=19){
-                    sections[i].disks[j].render()     ;           }
-            }
-        }
-        for(let i=0;i<sections[6].player1_disks.length;i++){
-            sections[6].player1_disks[i].render()
-        }
-        for(let i=0;i<sections[6].player2_disks.length;i++){
-            sections[6].player2_disks[i].render()
-        }
+    background(235);
+    push()
+    fill(210)
+     pop()
+    // image(img, 20, 350, 100, 100)
+    dice.render();
+    frameRate(15)
+     sections.forEach((section) => section.render());
+     for(let i=0;i<sections.length;i++){
+         for(let j=0;j<sections[i].disks.length;j++){
+             if(i!=6 && i!=19){
+                 sections[i].disks[j].render()     ;           }
+         }
+     }
+     for(let i=0;i<sections[6].player1_disks.length;i++){
+         sections[6].player1_disks[i].render()
+     }
+     for(let i=0;i<sections[6].player2_disks.length;i++){
+         sections[6].player2_disks[i].render()
+     }
+    if(player_1_out_disks==15){
+        alert("player 1 wins");
+        return;
+    }
+    if(player_2_out_disks==15){
+        alert("player 2 wins");
+        return;
+    }
+ 
         
 }
 

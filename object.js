@@ -12,6 +12,7 @@ class Stack{
         }
 
     }
+    
     push_stack(element){
         this.elements.push(element);
 
